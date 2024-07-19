@@ -1,0 +1,52 @@
+1. Check the Product Inventory 
+
+SELECT product_id, product_name, stock_quantity
+FROM inventory
+WHERE product_id = <PRODUCT_ID>;
+
+
+2. Verify the Customer's Order 
+
+SELECT order_id, customer_id, product_id, order_quantity, order_status
+FROM orders
+WHERE customer_id = <CUSTOMER_ID>
+AND product_id = <PRODUCT_ID>;
+
+
+3. Check Recent Orders for the Product 
+
+SELECT order_id, customer_id, product_id, order_quantity, order_date
+FROM orders
+WHERE product_id = <PRODUCT_ID>
+AND order_status = 'completed'
+ORDER BY order_date DESC;
+
+
+4. Verify Inventory Updates 
+
+SELECT inventory_id, product_id, change_quantity, change_type, change_date
+FROM inventory_changes
+WHERE product_id = <PRODUCT_ID>
+ORDER BY change_date DESC;
+
+
+5. Check for Order Cancellations 
+
+SELECT order_id, product_id, order_quantity, order_status, update_date
+FROM orders
+WHERE product_id = <PRODUCT_ID>
+AND order_status = 'cancelled'
+ORDER BY update_date DESC;
+
+6. Check for Inconsistencies or Errors 
+
+SELECT *
+FROM orders
+WHERE product_id = <PRODUCT_ID>
+AND order_status NOT IN ('completed', 'cancelled', 'pending');
+
+SELECT *
+FROM inventory
+WHERE product_id = <PRODUCT_ID>
+AND stock_quantity < 0;
+
